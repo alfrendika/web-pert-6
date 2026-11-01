@@ -1,0 +1,261 @@
+/* ============================================================
+   Praktikum 6 — JavaScript DOM dan Event Handling
+   Script dimuat dengan atribut defer, jadi semua elemen sudah ada.
+   ============================================================ */
+
+/* ---------- Latihan 1 — Mengubah teks dengan DOM ---------- */
+const judul = document.getElementById("judul");
+const pesan = document.getElementById("pesan");
+
+judul.textContent = "Belajar JavaScript DOM";
+pesan.textContent = "Konten berhasil diubah oleh JavaScript.";
+
+/* ---------- Latihan 2 — Event click ---------- */
+const tombol = document.getElementById("tombolAksi");
+
+tombol.addEventListener("click", function () {
+  pesan.textContent = "Tombol diklik pada " + new Date().toLocaleTimeString();
+});
+
+/* ---------- Latihan 3 — Mengubah kelas dan gaya CSS ---------- */
+const tombolGaya = document.getElementById("tombolGaya");
+const teksGaya = document.getElementById("teksGaya");
+
+tombolGaya.addEventListener("click", function () {
+  teksGaya.classList.toggle("highlight");
+  teksGaya.classList.toggle("teks-besar");
+});
+/* Catatan:
+   classList.add("x")    -> menambah kelas (tidak ada efek jika sudah ada)
+   classList.remove("x") -> menghapus kelas (tidak ada efek jika tidak ada)
+   classList.toggle("x") -> menambah jika belum ada, menghapus jika sudah ada */
+
+/* ---------- Eksperimen 4 — Sembunyikan / tampilkan paragraf ---------- */
+const tombolSembunyi = document.getElementById("tombolSembunyi");
+const teksSembunyi = document.getElementById("teksSembunyi");
+
+tombolSembunyi.addEventListener("click", function () {
+  const tersembunyi = teksSembunyi.classList.toggle("tersembunyi");
+  tombolSembunyi.textContent = tersembunyi ? "Tampilkan paragraf" : "Sembunyikan paragraf";
+  tombolSembunyi.setAttribute("aria-expanded", String(!tersembunyi));
+});
+
+/* ---------- Latihan 4 — Event input dan penghitung karakter ---------- */
+const namaInput = document.getElementById("namaInput");
+const jumlahKarakter = document.getElementById("jumlahKarakter");
+
+namaInput.addEventListener("input", function () {
+  jumlahKarakter.textContent = namaInput.value.length;
+});
+
+/* ---------- Latihan 5 — Validasi form pendaftaran ---------- */
+const form = document.getElementById("formPendaftaran");
+const pesanForm = document.getElementById("pesanForm");
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const nama = document.getElementById("nama").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const usiaInput = document.getElementById("usia").value;
+  const usia = Number(usiaInput);
+  const polaEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  pesanForm.className = "gagal";
+  if (nama === "") {
+    pesanForm.textContent = "Nama wajib diisi.";
+  } else if (nama.length < 3) {
+    // Eksperimen 2: nama minimal tiga karakter
+    pesanForm.textContent = "Nama minimal terdiri dari 3 karakter.";
+  } else if (!polaEmail.test(email)) {
+    pesanForm.textContent = "Masukkan email yang valid.";
+  } else if (usiaInput === "" || !Number.isInteger(usia) || usia < 17 || usia > 100) {
+    pesanForm.textContent = "Usia harus berupa bilangan bulat 17–100.";
+  } else {
+    pesanForm.className = "sukses";
+    pesanForm.textContent = "Validasi berhasil. Form siap diproses.";
+    form.reset();
+  }
+});
+
+/* ---------- Latihan 6 + Eksperimen 1 — Daftar tugas ---------- */
+const inputTugas = document.getElementById("inputTugas");
+const tambahTugas = document.getElementById("tambahTugas");
+const daftarTugas = document.getElementById("daftarTugas");
+const pesanTugas = document.getElementById("pesanTugas");
+
+function tambahItemTugas() {
+  const teks = inputTugas.value.trim();
+  if (teks === "") {
+    pesanTugas.textContent = "Tulis tugas terlebih dahulu.";
+    return;
+  }
+
+  const item = document.createElement("li");
+  const label = document.createElement("span");
+  const selesai = document.createElement("button");
+  const hapus = document.createElement("button");
+
+  label.textContent = teks + " "; // textContent: teks pengguna tidak dibaca sebagai HTML
+
+  selesai.type = "button";
+  selesai.textContent = "Tandai selesai";
+  selesai.addEventListener("click", function () {
+    item.classList.toggle("selesai");
+    selesai.textContent = item.classList.contains("selesai")
+      ? "Batalkan selesai" : "Tandai selesai";
+  });
+
+  // Eksperimen 1: tombol hapus satu item
+  hapus.type = "button";
+  hapus.className = "hapus";
+  hapus.textContent = "Hapus";
+  hapus.addEventListener("click", function () {
+    item.remove();
+    pesanTugas.textContent = "Tugas dihapus.";
+  });
+
+  item.append(label, selesai, hapus);
+  daftarTugas.appendChild(item);
+  inputTugas.value = "";
+  pesanTugas.textContent = "Tugas ditambahkan.";
+  inputTugas.focus();
+}
+
+tambahTugas.addEventListener("click", tambahItemTugas);
+inputTugas.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") tambahItemTugas();
+});
+
+/* ============================================================
+   MINI PROJECT — Form Pendaftaran Workshop
+   Fungsi interaktif:
+   1) Validasi nama, email, sesi (submit + blur)
+   2) Penghitung karakter & ringkasan langsung (input, change)
+   3) Pesan error/sukses di halaman
+   4) Tombol hapus input (click)
+   ============================================================ */
+const wsForm = document.getElementById("wsForm");
+const wsNama = document.getElementById("wsNama");
+const wsEmail = document.getElementById("wsEmail");
+const wsSesi = document.getElementById("wsSesi");
+const wsCatatan = document.getElementById("wsCatatan");
+const wsCount = document.getElementById("wsCount");
+const wsPesan = document.getElementById("wsPesan");
+const wsReset = document.getElementById("wsReset");
+
+const errNama = document.getElementById("errNama");
+const errEmail = document.getElementById("errEmail");
+const errSesi = document.getElementById("errSesi");
+const infoSesi = document.getElementById("infoSesi");
+
+const rNama = document.getElementById("rNama");
+const rEmail = document.getElementById("rEmail");
+const rSesi = document.getElementById("rSesi");
+const rCatatan = document.getElementById("rCatatan");
+
+const POLA_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Setiap validator mengembalikan teks error, atau "" jika valid.
+function cekNama() {
+  const v = wsNama.value.trim();
+  if (v === "") return "Nama wajib diisi.";
+  if (v.length < 3) return "Nama minimal 3 karakter.";
+  return "";
+}
+function cekEmail() {
+  const v = wsEmail.value.trim();
+  if (v === "") return "Email wajib diisi.";
+  if (!POLA_EMAIL.test(v)) return "Format email belum benar, contoh: nama@kampus.ac.id.";
+  return "";
+}
+function cekSesi() {
+  return wsSesi.value === "" ? "Pilih salah satu sesi workshop." : "";
+}
+
+function tampilkanHasil(input, elError, teks) {
+  elError.textContent = teks;
+  input.classList.toggle("invalid", teks !== "");
+  input.classList.toggle("valid", teks === "");
+  input.setAttribute("aria-invalid", String(teks !== ""));
+  return teks === "";
+}
+
+function ringkasan(nilai) {
+  return nilai === "" ? "—" : nilai;
+}
+function perbaruiRingkasan() {
+  rNama.textContent = ringkasan(wsNama.value.trim());
+  rEmail.textContent = ringkasan(wsEmail.value.trim());
+  rSesi.textContent = wsSesi.value === ""
+    ? "—" : wsSesi.options[wsSesi.selectedIndex].textContent;
+  rCatatan.textContent = ringkasan(wsCatatan.value.trim());
+  wsCount.textContent = wsCatatan.value.length;
+}
+
+// Ringkasan langsung saat mengetik
+[wsNama, wsEmail, wsCatatan].forEach(function (el) {
+  el.addEventListener("input", perbaruiRingkasan);
+});
+
+// Eksperimen 3: event change pada dropdown sesi
+wsSesi.addEventListener("change", function () {
+  perbaruiRingkasan();
+  if (wsSesi.value === "") {
+    infoSesi.textContent = "";
+  } else {
+    infoSesi.textContent = "Sesi dipilih: " + wsSesi.options[wsSesi.selectedIndex].textContent;
+    tampilkanHasil(wsSesi, errSesi, "");
+  }
+});
+
+// Validasi saat pindah dari kolom (blur) agar pengguna langsung tahu
+wsNama.addEventListener("blur", function () { tampilkanHasil(wsNama, errNama, cekNama()); });
+wsEmail.addEventListener("blur", function () { tampilkanHasil(wsEmail, errEmail, cekEmail()); });
+
+wsForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  // Panggil ketiganya (bukan &&) supaya semua pesan error tampil sekaligus
+  const okNama = tampilkanHasil(wsNama, errNama, cekNama());
+  const okEmail = tampilkanHasil(wsEmail, errEmail, cekEmail());
+  const okSesi = tampilkanHasil(wsSesi, errSesi, cekSesi());
+
+  if (okNama && okEmail && okSesi) {
+    const sesi = wsSesi.options[wsSesi.selectedIndex].textContent;
+    wsPesan.className = "sukses";
+    wsPesan.textContent = "Pendaftaran berhasil. Terima kasih, " + wsNama.value.trim() +
+      ". Konfirmasi dikirim ke " + wsEmail.value.trim() + " untuk " + sesi + ".";
+    resetForm(false);
+  } else {
+    wsPesan.className = "gagal";
+    wsPesan.textContent = "Pendaftaran belum dikirim. Periksa kolom yang ditandai.";
+    [wsNama, wsEmail, wsSesi].find(function (el) {
+      return el.classList.contains("invalid");
+    }).focus();
+  }
+});
+
+function resetForm(hapusPesan) {
+  wsForm.reset();
+  [wsNama, wsEmail, wsSesi].forEach(function (el) {
+    el.classList.remove("invalid", "valid");
+    el.removeAttribute("aria-invalid");
+  });
+  errNama.textContent = "";
+  errEmail.textContent = "";
+  errSesi.textContent = "";
+  infoSesi.textContent = "";
+  if (hapusPesan) {
+    wsPesan.className = "";
+    wsPesan.textContent = "";
+  }
+  perbaruiRingkasan();
+}
+
+wsReset.addEventListener("click", function () {
+  resetForm(true);
+  wsNama.focus();
+});
+
+perbaruiRingkasan();
