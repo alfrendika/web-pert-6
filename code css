@@ -1,0 +1,134 @@
+:root {
+  --ink: #16202e;
+  --muted: #687386;
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --line: #d5dce6;
+  --primary: #3478c8;
+  --primary-dark: #173f75;
+  --tint: #e6f1ff;
+  --danger: #b3261e;
+  --ok: #1b6e3c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8edf4;
+    --muted: #9aa6b8;
+    --bg: #0f1722;
+    --surface: #17212f;
+    --line: #2c3a4e;
+    --primary: #5b9be0;
+    --primary-dark: #b9d7ff;
+    --tint: #1d3350;
+    --danger: #ff8a80;
+    --ok: #6fd69a;
+  }
+}
+ 
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bg);
+}
+ 
+.hero { padding: 40px 20px 32px; max-width: 760px; margin: 0 auto; }
+.hero h1 { margin: 0 0 8px; font-size: clamp(1.6rem, 5vw, 2.4rem); color: var(--primary-dark); }
+ 
+main { max-width: 760px; margin: 0 auto; padding: 0 20px 56px; display: grid; gap: 20px; }
+section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+}
+section.utama { border-left: 4px solid var(--primary); }
+h2 { margin: 0 0 14px; font-size: 1.15rem; color: var(--primary-dark); }
+h3 { margin: 0 0 10px; font-size: 1rem; }
+ 
+label { display: block; font-weight: 600; margin: 12px 0 4px; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+input.invalid, select.invalid { border-color: var(--danger); }
+input.valid, select.valid { border-color: var(--ok); }
+ 
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 16px;
+  margin-top: 12px;
+  color: #fff;
+  background: var(--primary-dark);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+@media (prefers-color-scheme: dark) { button { color: #0f1722; } }
+button:hover { filter: brightness(1.12); }
+button.sekunder {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+.baris { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.baris input { flex: 1 1 200px; width: auto; }
+ 
+/* Latihan 3 */
+.highlight {
+  color: #173f75;
+  background-color: #e6f1ff;
+  border-left: 4px solid #3478c8;
+  padding: 12px;
+}
+.teks-besar { font-size: 1.4rem; }
+ 
+/* Eksperimen 4 */
+.tersembunyi { display: none; }
+ 
+/* Latihan 5 & 6 */
+#pesanForm, #pesanTugas, #wsPesan { min-height: 1.5em; font-weight: 600; }
+.sukses { color: var(--ok); }
+.gagal { color: var(--danger); }
+ 
+.selesai span { text-decoration: line-through; color: #687386; }
+li { margin-bottom: 8px; }
+#daftarTugas { padding-left: 20px; }
+#daftarTugas button { margin-top: 0; margin-left: 6px; padding: 4px 10px; font-size: .85rem; }
+#daftarTugas button.hapus { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+ 
+/* Mini project */
+.dua-kolom { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; }
+.field { display: flex; flex-direction: column; }
+.field label { margin-bottom: 4px; }
+.error { color: var(--danger); font-size: .9rem; min-height: 1.2em; margin-top: 4px; }
+.info { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+.ringkasan {
+  background: var(--tint);
+  border-radius: 8px;
+  padding: 16px;
+  align-self: start;
+}
+.ringkasan dl { margin: 0; }
+.ringkasan dt { font-size: .85rem; color: var(--muted); margin-top: 10px; }
+.ringkasan dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+ 
+@media (max-width: 640px) {
+  .dua-kolom { grid-template-columns: 1fr; }
+  section { padding: 16px; }
+}
+ 
+
+Claude selesai menulis balasan
