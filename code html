@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Praktikum DOM dan Event</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <h1 id="judul">Latihan DOM</h1>
+    <p id="pesan">Belum ada tindakan.</p>
+    <button id="tombolAksi" type="button">Klik Saya</button>
+  </header>
+ 
+  <main>
+    <!-- Latihan 3 + Eksperimen 4 -->
+    <section aria-labelledby="h-l3">
+      <h2 id="h-l3">Latihan 3 — Kelas dan gaya CSS</h2>
+      <p id="teksGaya">Paragraf ini berubah tampilan saat tombol ditekan.</p>
+      <button id="tombolGaya" type="button">Ganti gaya</button>
+ 
+      <p id="teksSembunyi">Paragraf ini bisa disembunyikan dan ditampilkan lagi (Eksperimen 4).</p>
+      <button id="tombolSembunyi" type="button" aria-controls="teksSembunyi" aria-expanded="true">Sembunyikan paragraf</button>
+    </section>
+ 
+    <!-- Latihan 4 -->
+    <section aria-labelledby="h-l4">
+      <h2 id="h-l4">Latihan 4 — Penghitung karakter</h2>
+      <label for="namaInput">Nama:</label>
+      <input type="text" id="namaInput" maxlength="40">
+      <p>Jumlah karakter: <span id="jumlahKarakter">0</span></p>
+    </section>
+ 
+    <!-- Latihan 5 + Eksperimen 2 -->
+    <section aria-labelledby="h-l5">
+      <h2 id="h-l5">Latihan 5 — Validasi form pendaftaran</h2>
+      <form id="formPendaftaran" novalidate>
+        <label for="nama">Nama lengkap</label>
+        <input id="nama" name="nama" type="text">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email">
+        <label for="usia">Usia</label>
+        <input id="usia" name="usia" type="number" min="17" max="100">
+        <button type="submit">Daftar</button>
+      </form>
+      <p id="pesanForm" aria-live="polite"></p>
+    </section>
+ 
+    <!-- Latihan 6 + Eksperimen 1 -->
+    <section aria-labelledby="h-l6">
+      <h2 id="h-l6">Latihan 6 — Daftar tugas</h2>
+      <label for="inputTugas">Tugas baru</label>
+      <div class="baris">
+        <input id="inputTugas" type="text">
+        <button id="tambahTugas" type="button">Tambah</button>
+      </div>
+      <p id="pesanTugas" aria-live="polite"></p>
+      <ul id="daftarTugas"></ul>
+    </section>
+ 
+    <!-- Mini Project + Eksperimen 3 -->
+    <section id="miniProject" aria-labelledby="h-mp" class="utama">
+      <h2 id="h-mp">Mini Project — Pendaftaran Workshop Web</h2>
+      <div class="dua-kolom">
+        <form id="wsForm" novalidate>
+          <div class="field">
+            <label for="wsNama">Nama lengkap</label>
+            <input id="wsNama" type="text" autocomplete="name" aria-describedby="errNama">
+            <span class="error" id="errNama" aria-live="polite"></span>
+          </div>
+ 
+          <div class="field">
+            <label for="wsEmail">Email</label>
+            <input id="wsEmail" type="email" autocomplete="email" aria-describedby="errEmail">
+            <span class="error" id="errEmail" aria-live="polite"></span>
+          </div>
+ 
+          <div class="field">
+            <label for="wsSesi">Sesi workshop</label>
+            <select id="wsSesi" aria-describedby="errSesi infoSesi">
+              <option value="">— Pilih sesi —</option>
+              <option value="pagi">Sesi 1: HTML &amp; CSS dasar (09.00–11.00)</option>
+              <option value="siang">Sesi 2: JavaScript DOM (13.00–15.00)</option>
+              <option value="sore">Sesi 3: Form &amp; validasi (15.30–17.00)</option>
+            </select>
+            <span class="info" id="infoSesi" aria-live="polite"></span>
+            <span class="error" id="errSesi" aria-live="polite"></span>
+          </div>
+ 
+          <div class="field">
+            <label for="wsCatatan">Alasan mengikuti (opsional)</label>
+            <textarea id="wsCatatan" rows="3" maxlength="120"></textarea>
+            <span class="info"><span id="wsCount">0</span>/120 karakter</span>
+          </div>
+ 
+          <div class="baris">
+            <button type="submit">Daftar</button>
+            <button type="button" id="wsReset" class="sekunder">Hapus input</button>
+          </div>
+          <p id="wsPesan" role="status" aria-live="polite"></p>
+        </form>
+ 
+        <aside class="ringkasan" aria-labelledby="h-ring">
+          <h3 id="h-ring">Ringkasan langsung</h3>
+          <dl>
+            <dt>Nama</dt><dd id="rNama">—</dd>
+            <dt>Email</dt><dd id="rEmail">—</dd>
+            <dt>Sesi</dt><dd id="rSesi">—</dd>
+            <dt>Alasan</dt><dd id="rCatatan">—</dd>
+          </dl>
+        </aside>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+ 
+
+Claude selesai menulis balasan
